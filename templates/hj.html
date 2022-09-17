@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<title>海角VIP视频</title>
+<link rel="stylesheet" type="text/css" href="http://www.helloweba.com/demo/css/main.css" />
+<script src="https://raw.githubusercontent.com/xiaomutongxue/VideoPlay-Demo/master/js/html5media.min.js"></script>
+<script src="https://clipboardjs.com/dist/clipboard.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+
+
+<style>
+.demo{
+    width:100%;background: #000;
+    position:relative;
+    padding-bottom:56.25%;    /*需要用padding来维持16:9比例,也就是9除以16*/
+    height: 0;
+}
+.demo video{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%
+</style>
+</head>
+
+<body>
+        帖子ID: <input type="text" id="ID">
+<input type="button" value="go" id="but">
+
+<div>
+标题：{{title}}
+</div>
+<div>
+链接：<span id="ttt">{{url}}</span>
+</div>
+    <button type="button" id="btn_Share" onclick="test('#btn_Share')">
+      复制
+    </button>
+<br/>
+<div id="header">
+<div id="main">
+   <div class="demo">
+        <video class="video" poster={{cover}} width="618" height="347" controls autoplay loop>
+			<source id="vv" src={{url}} >{{url}}</source>
+		
+		</video>
+
+   </div>
+</div>
+</body>
+
+  <script>
+function test(element) {
+      var clipboard = new ClipboardJS(element, {      //绑定元素id
+        text: function () {
+          var str = document.getElementById("ttt").innerText;
+          return str;
+        },
+      });
+      clipboard.on("success", function (e) {
+        alert("复制成功");
+      });
+      clipboard.on("error", function (e) {
+        alert(e);
+      });
+    }
+$(function(){
+$("#but").click(function(){
+var na =$("#ID").val();
+location.href="http://hj.xms.su/"+na
+})
+
+})
+  </script> 
+</html>
