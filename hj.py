@@ -34,17 +34,17 @@ def main(url):
     url_duan = url_video.split("/")
     time = url_duan[5]
     tag = url_duan[6]
-    url_meau = "https://test.aofahairextension.com/hjstore/video/"+time
+    url_meau = "https://hjvdo.139592.com/hjstore/video/"+time
     url_true = tag+".mp4"
     url_true2 = tag+".mov"
     url= url_true+"\n"+url_true2
-    url_req = requests.get(url_meau)
-    content  = url_req.content.decode("utf-8")
-    if url_true in content:
-        url = "https://test.aofahairextension.com/hjstore/video/"+time+"/"+url_true
-        print(url)
-    else:
-        url = "https://test.aofahairextension.com/hjstore/video/" + time + "/" + url_true2
+    #url_req = requests.get(url_meau)
+    #content  = url_req.content.decode("utf-8")
+    url = "https://hjvdo.139592.com/hjstore/video/"+time+"/"+url_true
+    print(url)
+    url_req = requests.get(url)
+    if(url_req.status_code == "404"):
+        url = "https://hjvdo.139592.com/hjstore/video/" + time + "/" + url_true2
         print(url)
     return render_template('hj.html',url=url,cover = url_cover,title = title)
 
@@ -73,21 +73,21 @@ def main2():
     url_duan = url_video.split("/")
     time = url_duan[5]
     tag = url_duan[6]
-    url_meau = "https://test.aofahairextension.com/hjstore/video/"+time
+    url_meau = "https://hjvdo.139592.com/hjstore/video/"+time
     url_true = tag+".mp4"
     url_true2 = tag+".mov"
     url= url_true+"\n"+url_true2
-    url_req = requests.get(url_meau)
-    content  = url_req.content.decode("utf-8")
-    if url_true in content:
-        url = "https://test.aofahairextension.com/hjstore/video/"+time+"/"+url_true
-        print(url)
-    else:
-        url = "https://test.aofahairextension.com/hjstore/video/" + time + "/" + url_true2
+    #url_req = requests.get(url_meau)
+    #content  = url_req.content.decode("utf-8")
+    url = "https://hjvdo.139592.com/hjstore/video/"+time+"/"+url_true
+    print(url)
+    url_req = requests.get(url)
+    if(url_req.status_code == "404"):
+        url = "https://hjvdo.139592.com/hjstore/video/" + time + "/" + url_true2
         print(url)
     return render_template('hj.html',url=url,cover = url_cover,title = title)
 
 if __name__ == '__main__':
     #main(1)
     app.run(host="0.0.0.0", port="666", debug=True)
-	#访问地址http://ip:666
+	#这是是订阅地址，在sager分组的订阅或其他软件填上http://ip:666
