@@ -95,4 +95,3 @@ def main2():
 if __name__ == '__main__':
     #main(1)
     app.run(host="0.0.0.0", port="666", debug=True)
-	#这是是订阅地址，在sager分组的订阅或其他软件填上http://ip:666
