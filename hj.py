@@ -50,7 +50,7 @@ def main(url):
     #content  = url_req.content.decode("utf-8")
     url = "https://hjvdo.139592.com/hjstore/video/"+time+"/"+url_true
     print(url)
-    url_req = requests.get(url)
+    url_req = requests.head(url)
     print(url_req.status_code)
 
     if(url_req.status_code == 404):
@@ -93,7 +93,7 @@ def main2():
     #content  = url_req.content.decode("utf-8")
     url = "https://hjvdo.139592.com/hjstore/video/"+time+"/"+url_true
     print(url)
-    url_req = requests.get(url)
+    url_req = requests.head(url)
     if(url_req.status_code == "404"):
         url = "https://hjvdo.139592.com/hjstore/video/" + time + "/" + url_true2
         print(url)
