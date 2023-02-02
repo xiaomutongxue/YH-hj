@@ -9,6 +9,12 @@ from flask import Flask
 from flask import render_template
 app = Flask(__name__)
 #
+
+@app.route("/favicon.ico", methods=["GET"])
+def main3():
+    print("0")
+    return "/aa"
+
 @app.route("/<url>", methods=["GET"])
 
 def main(url):
