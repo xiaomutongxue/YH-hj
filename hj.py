@@ -1,16 +1,20 @@
 #小沐同学 除yaohuo外 禁止分享 一切后果与本人无关
 
+#小沐同学 除yaohuo外 禁止分享 一切后果与本人无关
+
 import random
+import json
 import hashlib
 import requests
-import json
-import base64
+import base64,re
 from flask import Flask
 from flask import render_template
 app = Flask(__name__)
 #
 
-@app.route("/favicon.ico", methods=["GET"])
+
+@app.route("/%7Burl%7D", methods=["GET"])
+@app.route("//favicon.ico", methods=["GET"])
 def main3():
     print("0")
     return "/aa"
@@ -18,6 +22,7 @@ def main3():
 @app.route("/<url>", methods=["GET"])
 
 def main(url):
+
     #url = 'http://hjfdf.com/post/details?pid=446352'
     #pid = url.split("=")[1]
     #print(url)
@@ -32,31 +37,27 @@ def main(url):
 
     result = requests.get(url_new)
     result_body = json.loads(str((base64.b64decode(base64.b64decode(base64.b64decode(result.json()["data"])))),'utf-8'))
-    print(result_body)
+    #print(result_body)
     url_all = result_body["attachments"]
     title = result_body["title"]
     url_num = len(url_all)
     url_video = str(url_all[url_num-1]["remoteUrl"])
     url_cover = str(url_all[url_num-1]["coverUrl"])
-    url_cover = url_cover.replace(".txt","")
     url_duan = url_video.split("/")
     time = url_duan[5]
     tag = url_duan[6]
-    url_meau = "https://hjvdo.139592.com/hjstore/video/"+time
-    url_true = tag+".mp4"
-    url_true2 = tag+".mov"
-    url= url_true+"\n"+url_true2
-    #url_req = requests.get(url_meau)
-    #content  = url_req.content.decode("utf-8")
-    url = "https://hjvdo.139592.com/hjstore/video/"+time+"/"+url_true
-    print(url)
-    url_req = requests.head(url)
-    print(url_req.status_code)
-
-    if(url_req.status_code == 404):
-        print(url_req.status_code)
-        url = "https://hjvdo.139592.com/hjstore/video/" + time + "/" + url_true2
-        print(url)
+    txt  = str(requests.get(url_video).content.decode("utf-8"))
+    #print(txt)
+    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+    url = re.findall(regex, txt)
+    if url == []:
+        tag2= txt.split("#EXTINF:1.250000,")[1].replace("0.ts",".m3u8").replace("\n","")
+    else:
+        url_0 = url[0][0]
+    #print(url_0)
+        txt2 = url_0.split("/")
+        tag2 = txt2[7].replace("i0.ts","i.m3u8")
+    url = "https://p.hjcfcf.com/hjstore/video/"+time+"/"+tag+"/"+tag2
     return render_template('hj.html',url=url,cover = url_cover,title = title)
 
 @app.route("/", methods=["GET"])
@@ -81,22 +82,21 @@ def main2():
     url_num = len(url_all)
     url_video = str(url_all[url_num-1]["remoteUrl"])
     url_cover = str(url_all[url_num-1]["coverUrl"])
-    url_cover = url_cover.replace(".txt","")
     url_duan = url_video.split("/")
     time = url_duan[5]
     tag = url_duan[6]
-    url_meau = "https://hjvdo.139592.com/hjstore/video/"+time
-    url_true = tag+".mp4"
-    url_true2 = tag+".mov"
-    url= url_true+"\n"+url_true2
-    #url_req = requests.get(url_meau)
-    #content  = url_req.content.decode("utf-8")
-    url = "https://hjvdo.139592.com/hjstore/video/"+time+"/"+url_true
-    print(url)
-    url_req = requests.head(url)
-    if(url_req.status_code == "404"):
-        url = "https://hjvdo.139592.com/hjstore/video/" + time + "/" + url_true2
-        print(url)
+    txt  = str(requests.get(url_video).content.decode("utf-8"))
+    #print(txt)
+    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+    url = re.findall(regex, txt)
+    if url == []:
+        tag2= txt.split("#EXTINF:1.250000,")[1].replace("0.ts",".m3u8").replace("\n","")
+    else:
+        url_0 = url[0][0]
+    #print(url_0)
+        txt2 = url_0.split("/")
+        tag2 = txt2[7].replace("i0.ts","i.m3u8")
+    url = "https://p.hjcfcf.com/hjstore/video/"+time+"/"+tag+"/"+tag2
     return render_template('hj.html',url=url,cover = url_cover,title = title)
 
 if __name__ == '__main__':
